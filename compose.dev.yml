@@ -1,0 +1,4 @@
+services:
+  web:
+    image: ghcr.io/danny270793/icim-2026.com/backend:latest
+    pull_policy: always
