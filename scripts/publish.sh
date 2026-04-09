@@ -35,7 +35,7 @@ while [ $# -gt 0 ]; do
 done
 
 echo "Building ${IMAGE}:${VERSION}"
-docker build -f dockerfile -t "${IMAGE}:${VERSION}" .
+docker build --platform linux/amd64 -f dockerfile -t "${IMAGE}:${VERSION}" .
 
 echo "Pushing ${IMAGE}:${VERSION}"
 docker push "${IMAGE}:${VERSION}"
