@@ -50,7 +50,7 @@ if [[ "$_base_version" != "$VERSION" ]]; then
 fi
 
 echo "Building ${IMAGE}:${VERSION}"
-docker build --platform linux/amd64 -f dockerfile -t "${IMAGE}:${VERSION}" .
+docker build --platform linux/amd64 -f dockerfile -t "${IMAGE}:${VERSION}" -t "${IMAGE}:latest" .
 
 echo "Pushing ${IMAGE}:${VERSION}"
 docker push "${IMAGE}:${VERSION}"
