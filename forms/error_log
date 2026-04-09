@@ -1,0 +1,6 @@
+[29-Nov-2024 15:57:58 UTC] PHP Notice:  Undefined index: name in /home/sedemorg/6jemat.sedem.org.ec/forms/contact.php on line 17
+[29-Nov-2024 15:57:58 UTC] PHP Notice:  Undefined index: email in /home/sedemorg/6jemat.sedem.org.ec/forms/contact.php on line 18
+[29-Nov-2024 15:57:58 UTC] PHP Notice:  Undefined index: subject in /home/sedemorg/6jemat.sedem.org.ec/forms/contact.php on line 19
+[29-Nov-2024 15:57:58 UTC] PHP Notice:  Undefined index: name in /home/sedemorg/6jemat.sedem.org.ec/forms/contact.php on line 30
+[29-Nov-2024 15:57:58 UTC] PHP Notice:  Undefined index: email in /home/sedemorg/6jemat.sedem.org.ec/forms/contact.php on line 31
+[29-Nov-2024 15:57:58 UTC] PHP Notice:  Undefined index: message in /home/sedemorg/6jemat.sedem.org.ec/forms/contact.php on line 32
