@@ -1,0 +1,17 @@
+services:
+  web:
+    image: ghcr.io/danny270793/icim-2026.com/backend:latest
+    pull_policy: always
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "php",
+          "-r",
+          'exit(@file_get_contents("http://127.0.0.1:8080/") === false ? 1 : 0);',
+        ]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
