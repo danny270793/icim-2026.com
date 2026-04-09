@@ -54,6 +54,7 @@ docker build --platform linux/amd64 -f dockerfile -t "${IMAGE}:${VERSION}" .
 
 echo "Pushing ${IMAGE}:${VERSION}"
 docker push "${IMAGE}:${VERSION}"
+docker push "${IMAGE}:latest"
 
 if [[ "$_base_version" != "$VERSION" ]] && [ -f .env ]; then
   tmp="$(mktemp)"
