@@ -1,22 +1,27 @@
 set -e
 cd "$(dirname "$0")/.."
 
-# Same default as compose.dev.yml / compose.prod.yml
+if [ -f .env ]; then
+  set -a
+  # shellcheck disable=SC1091
+  . ./.env
+  set +a
+fi
+
 IMAGE="${IMAGE:-ghcr.io/danny270793/icim-2026.com/backend}"
-TAG="${TAG:-latest}"
-DOCKERFILE="${DOCKERFILE:-dockerfile}"
+VERSION="${VERSION:-latest}"
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    -t | --tag)
-      TAG="$2"
+    -t | --version)
+      VERSION="$2"
       shift 2
       ;;
     -h | --help)
-      echo "Usage: $0 [-t|--tag TAG]"
+      echo "Usage: $0 [-t|--version VERSION]"
       echo ""
       echo "Build project dockerfile and push to GHCR."
-      echo "Override with env: IMAGE, TAG, DOCKERFILE"
+      echo "IMAGE and VERSION are read from .env; override with env or -t/--version."
       echo ""
       echo "Login once per machine:"
       echo '  echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin'
@@ -29,8 +34,8 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-echo "Building ${IMAGE}:${TAG}"
-docker build -f "$DOCKERFILE" -t "${IMAGE}:${TAG}" .
+echo "Building ${IMAGE}:${VERSION}"
+docker build -f dockerfile -t "${IMAGE}:${VERSION}" .
 
-echo "Pushing ${IMAGE}:${TAG}"
-docker push "${IMAGE}:${TAG}"
+echo "Pushing ${IMAGE}:${VERSION}"
+docker push "${IMAGE}:${VERSION}"
