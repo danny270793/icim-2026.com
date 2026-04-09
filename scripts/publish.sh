@@ -34,8 +34,34 @@ while [ $# -gt 0 ]; do
   esac
 done
 
+bump_semver_patch() {
+  local v="$1"
+  if [[ "$v" =~ ^(v?)([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+    printf '%s%s.%s.%s' "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}" "${BASH_REMATCH[3]}" "$((${BASH_REMATCH[4]} + 1))"
+  else
+    printf '%s' "$v"
+  fi
+}
+
+_base_version="$VERSION"
+VERSION="$(bump_semver_patch "$VERSION")"
+if [[ "$_base_version" != "$VERSION" ]]; then
+  echo "Version ${VERSION} (semver patch +1 from ${_base_version})"
+fi
+
 echo "Building ${IMAGE}:${VERSION}"
 docker build --platform linux/amd64 -f dockerfile -t "${IMAGE}:${VERSION}" .
 
 echo "Pushing ${IMAGE}:${VERSION}"
 docker push "${IMAGE}:${VERSION}"
+
+if [[ "$_base_version" != "$VERSION" ]] && [ -f .env ]; then
+  tmp="$(mktemp)"
+  while IFS= read -r line || [ -n "$line" ]; do
+    if [[ "$line" =~ ^VERSION= ]]; then
+      printf 'VERSION=%s\n' "$VERSION"
+    else
+      printf '%s\n' "$line"
+    fi
+  done < ".env" > "$tmp" && mv "$tmp" .env
+fi
